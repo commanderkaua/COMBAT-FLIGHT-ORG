@@ -28,12 +28,14 @@ function preload()
 }
 
 function setup() {
-	createCanvas(windowWidth,windowHeight-30);
-	bg = createSprite(displayWidth/2,displayHeight/2-40,20,20);
-  	bg.addImage(bgImg);
-  	bg.scale = 2.7
+	createCanvas(windowWidth,windowHeight);
+	//bg = createSprite(displayWidth/2,displayHeight/2-40,20,20);
+  	//bg.addImage(bgImg);
+  //bg.scale = 2.7
 
-		restartB = createSprite(800,600,50,50);
+
+
+		restartB = createSprite(400,500,50,50);
 	  restartB.visible = false;
 
 	engine = Engine.create();
@@ -70,11 +72,11 @@ function setup() {
 
 
 function draw() {
-  rectMode(CENTER);
-  background(0);
-textSize(30);
+  background(bgImg);
+  textSize(30);
   stroke("red");
   text("pontuação:"+ score, windowWidth/2, 40);
+
 
   if(gameState === "fight"){
 
@@ -127,9 +129,8 @@ textSize(30);
 	 if(missileGroup.isTouching(SU57Group)){
 		  SU57Group[i].destroy()
 		  missileGroup.destroyEach();
-		  score = score+1;
-		 
-		  } 
+		  score = score+1;		 
+		} 
 	
 	}
   }
@@ -149,10 +150,13 @@ textSize(30);
   
   enemy();
 
+if(score===10){
+	gameState = "won"
+}
+
   if(gameState == "lost"){  
 	textSize(100)
-	fill("red")
-
+	fill("red");
 	text("Você Perdeu :(", 400,400);
 	SU57Group.destroyEach();
 	restartB.visible = true;
@@ -166,15 +170,10 @@ textSize(30);
 	restartB.visible = true;
   }
 
- drawSprites();
- 
- 
-  
+ drawSprites();  
   }
 
-if(score===15){
-	gameState = "won"
-}
+
 
 if(mousePressedOver(restartB)){
 	gameState = "fight";
